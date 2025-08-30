@@ -285,8 +285,8 @@ public:
 
         fps = 150;
 
-        left_dir_ = kitti_path + "/Camera_0";
-        right_dir_ = kitti_path + "/Camera_1";
+        left_dir_ = kitti_path + "/image_2";
+        right_dir_ = kitti_path + "/image_3";
 
         if (!fs::exists(left_dir_) || !fs::exists(right_dir_)) {
             RCLCPP_ERROR(this->get_logger(), "Invalid KITTI dataset path: %s", kitti_path.c_str());
