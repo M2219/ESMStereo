@@ -76,7 +76,8 @@ Note: The reported inference performance on Jetson AGX Orin reflects pure networ
 * NVIDIA RTX 4070 S
 * Python 3.10
 * Pytorch 2.5.1+cu118
-
+* Jetson Orin 40 GB
+* JetPack 6.2.1
 ## Install
 
 ```
