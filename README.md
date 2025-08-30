@@ -78,6 +78,8 @@ Note: The reported inference performance on Jetson AGX Orin reflects pure networ
 * Pytorch 2.5.1+cu118
 * Jetson Orin 40 GB
 * JetPack 6.2.1
+* TensorRT 10
+
 ## Install
 
 ```
