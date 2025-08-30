@@ -45,7 +45,10 @@ if __name__ == "__main__":
     model.load_state_dict(state_dict["model"])
     print("number of parameters == ", count_parameters(model))
 
+    #left = torch.ones((1, 3, 576, 960)).cuda()
+    #right = torch.ones((1, 3, 576, 960)).cuda()
+
     left = torch.ones((1, 3, 384, 1248)).cuda()
     right = torch.ones((1, 3, 384, 1248)).cuda()
 
-    onnx = torch.onnx.export(model.module, args=(left, right), f="StereoModel.onnx", input_names=["left", "right"], output_names=["disp"], verbose=True, do_constant_folding=True)
+    onnx = torch.onnx.export(model.module, args=(left, right), f="StereoModel.onnx", input_names=["left", "right"], output_names=["disp"], verbose=True, do_constant_folding=False)
