@@ -12,10 +12,10 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {'kitti_path': './../../vkitti/rgb/Scene02/rain/frames/rgb/'},
-            {'plugin_path': './../../dnn_stereo_disparity/plugins/x86_64/ess_plugins.so'},
+            {'plugin_path': './../dnn_stereo_disparity_v4.1.0_onnx/plugins/x86_64/ess_plugins.so'},
             {'depth_kitti_path': './../../vkitti/depth/Scene02/rain/frames/depth/'},
             {'model_path': '/tmp/ess.plan'},
-            {'record_video': False},
+            {'record_video': True},
             {'net_input_width': 960},
             {'net_input_height': 576},
             {'fx': 725.0087},

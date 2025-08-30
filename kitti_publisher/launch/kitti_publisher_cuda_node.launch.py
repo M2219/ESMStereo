@@ -8,7 +8,7 @@ def generate_launch_description():
         name='kitti_publisher_cuda_node',
         output='screen',
         parameters=[
-            {'kitti_path': './../../19'},
+            {'kitti_path': '/home/stereo/vkitti/vkitti_2.0.3_rgb/Scene01/rain/frames/rgb/'},
             {'model_path': '/tmp/StereoModel.plan'},
             {'record_video': True},
             {'net_input_width': 1248},

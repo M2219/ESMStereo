@@ -262,7 +262,7 @@ void visualize_and_record_disparity(
     cv::waitKey(1);
 
     if (record_video && !video_writer.isOpened()) {
-        std::string output_path = "disparity_output.mp4";
+        std::string output_path = "disparity_output.avi";
         int fourcc = cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
         int fps = 30;
         cv::Size frame_size(combined.cols, combined.rows);
@@ -270,8 +270,15 @@ void visualize_and_record_disparity(
     }
 
     if (record_video && video_writer.isOpened()) {
-        video_writer.write(combined);
+        cv::Mat output_frame;
+        if (combined.channels() == 1) {
+            cv::cvtColor(combined, output_frame, cv::COLOR_GRAY2BGR);
+        } else {
+            output_frame = combined;
+        }
+        video_writer.write(output_frame);
     }
+
 }
 
 
@@ -476,6 +483,13 @@ public:
 
             RCLCPP_ERROR(this->get_logger(), "TensorRT initialization failed!");
             rclcpp::shutdown();
+        }
+    }
+
+    ~KittiImagePublisher() {
+        if (video_writer.isOpened()) {
+            video_writer.release();
+            RCLCPP_INFO(this->get_logger(), "Video writer released.");
         }
     }
 
