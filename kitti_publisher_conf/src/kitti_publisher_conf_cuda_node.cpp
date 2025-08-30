@@ -180,8 +180,7 @@ void visualize_and_record_disparity(
         depth_text = "N/A";
     }
 
-    double max_val, min_val;
-    cv::minMaxLoc(disp_filtered_16, &min_val, &max_val, nullptr, nullptr, valid_mask);
+    double max_val = 30000, min_val = 400;
     cv::Mat disp_norm, disp_color;
 
     disp_filtered_16.convertTo(disp_norm, CV_8UC1, -255.0 / (max_val - min_val), 255.0 * max_val / (max_val - min_val));
