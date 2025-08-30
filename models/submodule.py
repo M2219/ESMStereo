@@ -148,7 +148,7 @@ def groupwise_correlation(fea1: torch.Tensor, fea2: torch.Tensor, num_groups: in
     assert cost.shape == (B, num_groups, H, W)
     return cost
 
-def build_gwc_volume(refimg_fea: torch.Tensor, targetimg_fea: torch.Tensor, maxdisp: int, num_groups: int) -> torch.Tensor:
+def build_gwc_volume_old(refimg_fea: torch.Tensor, targetimg_fea: torch.Tensor, maxdisp: int, num_groups: int) -> torch.Tensor:
     B, C, H, W = refimg_fea.shape
     volume = refimg_fea.new_zeros([B, num_groups, maxdisp, H, W])
     for i in range(maxdisp):
@@ -241,3 +241,30 @@ def warp(x, disp):
     vgrid = vgrid.permute(0, 2, 3, 1)
     output = nn.functional.grid_sample(x, vgrid)
     return output
+
+def build_gwc_volume(ref: torch.Tensor,
+                       tgt: torch.Tensor,
+                       maxdisp: int,
+                       num_groups: int) -> torch.Tensor:
+    B, C, H, W = ref.shape
+    assert C % num_groups == 0
+    D = maxdisp
+
+    device = ref.device
+    w = torch.arange(W, device=device).view(1, 1, 1, 1, W)
+    d = torch.arange(D, device=device).view(1, 1, D, 1, 1)
+    idx = (w - d)
+    valid = (idx >= 0) & (idx < W)
+    idx = idx.clamp(0, W - 1).long()
+
+    idx_full = idx.expand(B, 1, D, H, W).expand(B, C, D, H, W)
+    tgt_exp  = tgt.unsqueeze(2).expand(B, C, D, H, W)
+    tgt_shifted = torch.gather(tgt_exp, dim=4, index=idx_full)
+
+    tgt_shifted = tgt_shifted * valid.to(tgt_shifted.dtype)
+
+    prod = ref.unsqueeze(2) * tgt_shifted
+    G = num_groups
+    CpG = C // G
+    volume = prod.view(B, G, CpG, D, H, W).mean(dim=2)
+    return volume.contiguous()
