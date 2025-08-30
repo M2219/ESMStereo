@@ -45,7 +45,7 @@ parser.add_argument('--seed', type=int, default=1, metavar='S', help='random see
 parser.add_argument('--summary_freq', type=int, default=1, help='the frequency of saving summary')
 parser.add_argument('--save_freq', type=int, default=10, help='the frequency of saving checkpoint')
 
-parser.add_argument('--cv_scale', type=int, default=4, help='cost volume scale factor', choices=[8, 4])
+parser.add_argument('--cv_scale', type=int, default=4, help='cost volume scale factor', choices=[16, 8, 4])
 parser.add_argument('--cv', type=str, default='gwc', choices=[
           'norm_correlation',
           'gwc',
