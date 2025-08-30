@@ -8,9 +8,9 @@ def generate_launch_description():
         name='kitti_publisher_cuda_node',
         output='screen',
         parameters=[
-            {'kitti_path': '/datasets/odometry/data_odometry_color/dataset/sequences/04'},
+            {'kitti_path': './../../19'},
             {'model_path': '/tmp/StereoModel.plan'},
-            {'record_video': False},
+            {'record_video': True},
             {'net_input_width': 1248},
             {'net_input_height': 384},
             {'fx': 707.0912},
