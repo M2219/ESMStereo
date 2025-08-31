@@ -14,7 +14,7 @@ def generate_launch_description():
             {'kitti_path': './../../vkitti/rgb/Scene02/rain/frames/rgb/'},
             {'depth_kitti_path': './../../vkitti/depth/Scene02/rain/frames/depth/'},
             {'model_path': '/tmp/StereoModel_576_960_fp16.plan'},
-            {'record_video': False},
+            {'record_video': True},
             {'net_input_width': 960},
             {'net_input_height': 576},
             {'fx': 725.0087},

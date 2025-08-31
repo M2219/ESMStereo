@@ -385,14 +385,15 @@ private:
             std::cerr << "Inference failed\n";
         }
 
-        cudaStreamSynchronize(stream_);
-
         auto end = high_resolution_clock::now();
         double elapsed_ms = duration<double, std::milli>(end - start).count();
         std::cout << "Elapsed time =: " << elapsed_ms << " ms" << std::endl;
 
         // Copy output back to host
         cudaMemcpyAsync(outputData, buffers_[outputIndex_], outputSize_, cudaMemcpyDeviceToHost, stream_);
+        cudaStreamSynchronize(stream_);
+
+
         cv::Mat disp_mat(net_input_height_, net_input_width_, CV_32FC1, outputData);
 
         // Crop the disparity cv::Mat to remove padding

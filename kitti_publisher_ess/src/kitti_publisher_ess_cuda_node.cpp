@@ -495,14 +495,13 @@ private:
             std::cerr << "Inference failed\n";
         }
 
-        cudaStreamSynchronize(stream_);
-
         auto end = high_resolution_clock::now();
         double elapsed_ms = duration<double, std::milli>(end - start).count();
         std::cout << "Elapsed time =: " << elapsed_ms << " ms" << std::endl;
 
         cudaMemcpyAsync(confidenceOutputData, buffers_[confidenceIndex_], outputSize_, cudaMemcpyDeviceToHost, stream_);
         cudaMemcpyAsync(outputData, buffers_[outputIndex_], outputSize_, cudaMemcpyDeviceToHost, stream_);
+        cudaStreamSynchronize(stream_);
 
         cv::Mat disp_mat(net_input_height_, net_input_width_, CV_32FC1, outputData);
 
