@@ -462,8 +462,9 @@ private:
         float* inputLeft = preprocess_image(left_img, net_input_width_, net_input_height_);
         float* inputRight = preprocess_image(right_img, net_input_width_, net_input_height_);
 
-        auto start = high_resolution_clock::now();
-
+        cudaEventCreate(&eStart);
+        cudaEventCreate(&eEnd);
+        cudaEventRecord(eStart, stream_);
         // Copy input data to device
         cudaMemcpyAsync(buffers_[leftIndex_], inputLeft, inputSize_, cudaMemcpyHostToDevice, stream_);
         cudaMemcpyAsync(buffers_[rightIndex_], inputRight, inputSize_, cudaMemcpyHostToDevice, stream_);
@@ -477,9 +478,12 @@ private:
             std::cerr << "Inference failed\n";
         }
 
-        auto end = high_resolution_clock::now();
-        double elapsed_ms = duration<double, std::milli>(end - start).count();
-        std::cout << "Elapsed time =: " << elapsed_ms << " ms" << std::endl;
+        cudaEventRecord(eEnd, stream_);
+        cudaEventSynchronize(eEnd);
+
+        float elapsed_ms = 0;
+        cudaEventElapsedTime(&elapsed_ms, eStart, eEnd);
+        std::cout << "elapsed_ms: " << elapsed_ms << " ms\n";
 
         // Copy output back to host
         cudaMemcpyAsync(outputData, buffers_[outputIndex_], outputSize_, cudaMemcpyDeviceToHost, stream_);
@@ -548,6 +552,7 @@ private:
     int leftIndex_, rightIndex_, outputIndex_;
     cv::VideoWriter video_writer;
     size_t inputSize_,  outputSize_;
+    cudaEvent_t eStart, eEnd;
 };
 
 int main(int argc, char* argv[]) {
