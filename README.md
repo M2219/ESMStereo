@@ -29,6 +29,14 @@ for Real-Time and Accurate Stereo Matching</h1>
 </p>
 
 Note: The reported inference performance on Jetson AGX Orin reflects pure network inference only, excluding any preprocessing, postprocessing, and host-to-device (H2D) or device-to-host (D2H) data transfers.
+Note: To get the max performance on AGX Orin do not forget:
+
+```
+sudo nvpmodel -m 0     # Max-N mode
+sudo jetson_clocks     # lock max clocks
+sudo tegrastats        # watch GR3D_FREQ ~ 99%, check throttling/thermals
+
+```
 
 ## Performance of ESMStereo-S on KITTI raw dataset (105 FPS for the resolution of 380 x 1248 on RTX 4070 S)
 <p align="center">
