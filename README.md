@@ -29,6 +29,7 @@ for Real-Time and Accurate Stereo Matching</h1>
 </p>
 
 Note: The reported inference performance on Jetson AGX Orin reflects pure network inference only, excluding any preprocessing, postprocessing, and host-to-device (H2D) or device-to-host (D2H) data transfers.
+
 Note: To get the max performance on AGX Orin do not forget:
 
 ```
