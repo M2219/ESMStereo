@@ -148,7 +148,7 @@ def groupwise_correlation(fea1: torch.Tensor, fea2: torch.Tensor, num_groups: in
     assert cost.shape == (B, num_groups, H, W)
     return cost
 
-def build_gwc_volume_old(refimg_fea: torch.Tensor, targetimg_fea: torch.Tensor, maxdisp: int, num_groups: int) -> torch.Tensor:
+def build_gwc_volume(refimg_fea: torch.Tensor, targetimg_fea: torch.Tensor, maxdisp: int, num_groups: int) -> torch.Tensor:
     B, C, H, W = refimg_fea.shape
     volume = refimg_fea.new_zeros([B, num_groups, maxdisp, H, W])
     for i in range(maxdisp):
@@ -242,7 +242,7 @@ def warp(x, disp):
     output = nn.functional.grid_sample(x, vgrid)
     return output
 
-def build_gwc_volume(ref: torch.Tensor,
+def build_gwc_volume_gather(ref: torch.Tensor,
                        tgt: torch.Tensor,
                        maxdisp: int,
                        num_groups: int) -> torch.Tensor:
