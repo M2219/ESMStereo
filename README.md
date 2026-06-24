@@ -4,7 +4,7 @@ for Real-Time and Accurate Stereo Matching</h1>
   <p align="center">
     Mahmoud Tahmasebi* (mahmoud.tahmasebi@research.atu.ie), Saif Huq, Kevin Meehan, Marion McAfee
   </p>
-  <h3 align="center"><a href="https://arxiv.org/abs/2506.21091">Pre-print</a>
+  <h3 align="center"><a href="https://www.mdpi.com/2313-433X/12/7/277">Paper</a>
   <div align="center"></div>
 </p>
 <p align="center">
